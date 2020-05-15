@@ -36,7 +36,7 @@ export default {
   props: ["header"],
   data: function () {
     return {
-      navActive: false
+      navActive: true
     }
   },
   created () {
@@ -51,7 +51,7 @@ export default {
       var titlePosition = titleElement.getBoundingClientRect().top;
       var titleHeight = titleElement.clientHeight;
       var scroll = window.scrollY;
-      this.navActive = scroll > titlePosition + titleHeight;
+      this.navActive = scroll < titlePosition + titleHeight;
     }
   },
   computed: {
@@ -98,7 +98,7 @@ export default {
         "no-image": !headerImage,
         "site-header-background": this.isArchive || this.isHome,
         "site-nav-main": this.isPage || this.isPost,
-        "nav-post-title-active": this.navActive && !this.isHome && !this.isPage
+        "nav-post-title-active": !(this.navActive || this.isHome || this.isPage)
       };
     }
   }
