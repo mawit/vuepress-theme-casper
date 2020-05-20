@@ -1,5 +1,5 @@
 <template>
-  <header :class="headerClasses">
+  <header :class="headerClasses" v-scroll="handleScroll">
     <div v-if="isArchive" class="outer site-nav-main">
       <div class="inner">
         <slot name="header"></slot>
@@ -31,9 +31,26 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
+import { throttle } from "lodash";
 
 export default {
   props: ["header"],
+  data: function () {
+    return {
+      navTitleActive: false
+    }
+  },
+  methods: {
+    handleScroll: function () {
+      const titleElement = document.getElementsByClassName("post-full-title")[0];
+      if(titleElement) {
+        const titlePosition = titleElement.getBoundingClientRect().top;
+        const titleHeight = titleElement.clientHeight;
+        const scroll = window.scrollY;
+        this.navTitleActive = scroll > titlePosition + titleHeight;
+      }
+    }
+  },
   computed: {
     ...mapGetters(["type"]),
 
@@ -77,7 +94,8 @@ export default {
         "responsive-header-img": headerImage,
         "no-image": !headerImage,
         "site-header-background": this.isArchive || this.isHome,
-        "site-nav-main": this.isPage || this.isPost
+        "site-nav-main": this.isPage || this.isPost,
+        "nav-post-title-active": this.navTitleActive && !this.isHome && !this.isPage
       };
     }
   }

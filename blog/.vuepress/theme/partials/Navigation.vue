@@ -1,5 +1,5 @@
 <template>
-  <nav class="site-nav" style="overflow: visible;">
+  <nav class="site-nav" style="overflow: visible;" :class="siteNavFixed">
     <div class="site-nav-left-wrapper" style="height: 100%">
       <div class="site-nav-left" style="margin-top: auto;">
         <router-link v-if="!isHome && blog.logo" class="site-nav-logo" to="/">
@@ -16,6 +16,7 @@
               }}</router-link>
             </li>
           </ul>
+          <span class="nav-post-title" v-if="isPost">{{ current.title }}</span>
         </div>
       </div>
     </div>
@@ -40,11 +41,17 @@ import SocialLink from "./SocialLink";
 import SearchBox from '@SearchBox'
 
 export default {
+  props: {
+    'siteNavFixed': String
+  },
   components: { SocialLink, SearchBox },
   computed: {
-    ...mapGetters(["blog", "type", "social", "nav"]),
+    ...mapGetters(["blog", "type", "social", "nav", "current"]),
     isHome() {
       return this.type === "home";
+    },
+    isPost() {
+      return this.type === "post";
     }
   }
 };
