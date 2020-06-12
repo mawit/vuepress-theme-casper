@@ -20,14 +20,6 @@
       </div>
     </div>
     <div class="site-nav-right">
-      <div class="social-links">
-        <social-link
-          v-for="(channel, index) in social"
-          :url="channel.url"
-          :type="channel.type"
-          :key="index"
-        />
-      </div>
     </div>
   </nav>
 </template>
@@ -35,12 +27,10 @@
 <script>
 import { mapGetters } from "vuex";
 
-import SocialLink from "./SocialLink";
-
 export default {
-  components: { SocialLink },
+  components: { },
   computed: {
-    ...mapGetters(["blog", "type", "social", "nav"]),
+    ...mapGetters(["blog", "type", "nav"]),
     isHome() {
       return this.type === "home";
     }
