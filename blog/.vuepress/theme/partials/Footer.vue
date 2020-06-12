@@ -10,6 +10,14 @@
           rel="noopener"
         >{{ item.text }}</a>
       </nav>
+      <div class="social-links">
+        <social-link
+          v-for="(channel, index) in social"
+          :url="channel.url"
+          :type="channel.type"
+          :key="index"
+        />
+      </div>
     </div>
   </footer>
 
@@ -18,10 +26,12 @@
 <script>
   import { mapGetters } from 'vuex'
 
+  import SocialLink from "./SocialLink";
+
   export default {
-    components: { },
+    components: { SocialLink },
     computed: {
-      ...mapGetters(['blog', 'footer']),
+      ...mapGetters(['blog', 'footer', 'social']),
       year () {
         return new Date().getFullYear()
       }

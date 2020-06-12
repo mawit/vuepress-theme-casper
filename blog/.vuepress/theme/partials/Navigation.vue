@@ -22,14 +22,6 @@
     </div>
     <div class="site-nav-right">
       <SearchBox v-if="blog.search" />
-      <div class="social-links">
-        <social-link
-          v-for="(channel, index) in social"
-          :url="channel.url"
-          :type="channel.type"
-          :key="index"
-        />
-      </div>
     </div>
   </nav>
 </template>
@@ -37,16 +29,15 @@
 <script>
 import { mapGetters } from "vuex";
 
-import SocialLink from "./SocialLink";
 import SearchBox from '@SearchBox'
 
 export default {
   props: {
     'siteNavFixed': String
   },
-  components: { SocialLink, SearchBox },
+  components: { SearchBox },
   computed: {
-    ...mapGetters(["blog", "type", "social", "nav", "current"]),
+    ...mapGetters(["blog", "type", "nav", "current"]),
     isHome() {
       return this.type === "home";
     },
